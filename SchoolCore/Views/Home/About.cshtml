@@ -1,0 +1,28 @@
+﻿@using SchoolCore.ViewModels
+@model List<SchoolCore.ViewModels.EnrollmentDateGroup>
+    ViewData["Title"] = "About";
+}
+
+<h2> 学生统计信息</h2>
+<table>
+    <tr>
+        <th>注册时间</th>
+        <th>学生人数</th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td> @Html.DisplayFor(a => item.EnrollmenDate)</td>
+            <td> @Html.DisplayFor(a => item.StudentCount)</td>
+        </tr>
+    }
+</table>
+
+<p> 这是星星点灯</p>
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Use this area to provide additional information.</p>
