@@ -21,57 +21,26 @@ namespace SchoolCore.EntityFramework.Data
             {
                 return; //返回，不执行。
             }
-            #region
-            var students = new Student[]
-                {
-                    new Student{ RealName="爱新觉罗",EnrollmentDate=DateTime.Parse("2018-9-01")},
-                    new Student{ RealName="王富贵",EnrollmentDate=DateTime.Parse("2015-9-01")},
-                    new Student{ RealName="李丹",EnrollmentDate=DateTime.Parse("2018-3-01")},
-                    new Student{ RealName="李小明",EnrollmentDate=DateTime.Parse("2018-9-01")},
-                    new Student{ RealName="贺兰进明",EnrollmentDate=DateTime.Parse("2018-8-01")},
+            #region 添加种子学生信息
 
-                };
-            foreach (Student s in students)
+            var students = new[]
             {
+                new Student {RealName = "龙傲天", EnrollmentDate = DateTime.Parse("2005-09-01")},
+                new Student {RealName = "王尼玛", EnrollmentDate = DateTime.Parse("2002-09-01")},
+                new Student {RealName = "张全蛋", EnrollmentDate = DateTime.Parse("2003-09-01")},
+                new Student {RealName = "叶良辰", EnrollmentDate = DateTime.Parse("2002-09-01")},
+                new Student {RealName = "和珅", EnrollmentDate = DateTime.Parse("2002-09-01")},
+                new Student {RealName = "纪晓岚", EnrollmentDate = DateTime.Parse("2001-09-01")},
+                new Student {RealName = "李逍遥", EnrollmentDate = DateTime.Parse("2003-09-01")},
+                new Student {RealName = "王小虎", EnrollmentDate = DateTime.Parse("2005-09-01")}
+            };
+            foreach (var s in students)
                 context.Students.Add(s);
-            }
             context.SaveChanges();
 
-            var courses = new Course[]
-            {
-                new Course{ CourseId=11,Title="数学",Credits=3},
-                new Course{ CourseId=25,Title="政治",Credits=3},
-                new Course{ CourseId=30,Title="物理",Credits=1},
-                new Course{ CourseId=70,Title="化学",Credits=4},
-                new Course{ CourseId=65,Title="英语",Credits=2},
-                new Course{ CourseId=55,Title="历史",Credits=4},
-            };
-            foreach (Course c in courses)
-            {
-                context.Courses.Add(c);
-
-            }
-            context.SaveChanges();
-            var enrollments = new Enrollment[]
-            {
-                new Enrollment{ EnrollmentId=1,CourseId=11,Grade=CourseGrade.A},
-                new Enrollment{ EnrollmentId=1,CourseId=25,Grade=CourseGrade.A},
-                new Enrollment{ EnrollmentId=2,CourseId=65,Grade=CourseGrade.B},
-                new Enrollment{ EnrollmentId=2,CourseId=55,Grade=CourseGrade.C},
-                new Enrollment{ EnrollmentId=2,CourseId=30,Grade=CourseGrade.B},
-                new Enrollment{ EnrollmentId=3,CourseId=30,Grade=CourseGrade.F},
-                new Enrollment{ EnrollmentId=3,CourseId=11,Grade=CourseGrade.D},
-                new Enrollment{ EnrollmentId=4,CourseId=25,Grade=CourseGrade.E},
-                new Enrollment{ EnrollmentId=5,CourseId=55,Grade=CourseGrade.A},
-
-            };
-            foreach (Enrollment f in enrollments)
-            {
-                context.Enrollments.Add(f);
-
-            }
-            context.SaveChanges();
             #endregion
+
+
             #region 添加种子老师信息
 
             var instructors = new[]
@@ -113,6 +82,8 @@ namespace SchoolCore.EntityFramework.Data
             context.SaveChanges();
 
             #endregion
+
+
             #region 添加部门的种子的数据
 
             var departments = new[]
@@ -148,10 +119,71 @@ namespace SchoolCore.EntityFramework.Data
             };
 
             foreach (var d in departments)
-                context.Departments.Add(d); 
+                context.Departments.Add(d);
             context.SaveChanges();
 
             #endregion
+
+
+            var courses = new[]
+            {
+                new Course
+                {
+                    CourseId = 1050,
+                    Title = "数学",
+                    Credits = 3,
+                    DepartmentId = departments.Single(s => s.Name == "兵法").Id
+                },
+                new Course
+                {
+                    CourseId = 4022,
+                    Title = "政治",
+                    Credits = 3,
+                    DepartmentId = departments.Single(s => s.Name == "文言文").Id
+                },
+                new Course
+                {
+                    CourseId = 4041,
+                    Title = "物理",
+                    Credits = 3,
+                    DepartmentId = departments.Single(s => s.Name == "兵法").Id
+                },
+                new Course
+                {
+                    CourseId = 1045,
+                    Title = "化学",
+                    Credits = 4,
+                    DepartmentId = departments.Single(s => s.Name == "世界和平").Id
+                },
+                new Course
+                {
+                    CourseId = 3141,
+                    Title = "生物",
+                    Credits = 4,
+                    DepartmentId = departments.Single(s => s.Name == "论语").Id
+                },
+                new Course
+                {
+                    CourseId = 2021,
+                    Title = "英语",
+                    Credits = 3,
+                    DepartmentId = departments.Single(s => s.Name == "论语").Id
+                },
+                new Course
+                {
+                    CourseId = 2042,
+                    Title = "历史",
+                    Credits = 4,
+                    DepartmentId = departments.Single(s => s.Name == "文言文").Id
+                }
+            };
+
+
+            foreach (var c in courses)
+                context.Courses.Add(c);
+            context.SaveChanges();
+
+
             #region 办公室分配的种子数据
 
             var officeAssignments = new[]
@@ -178,6 +210,7 @@ namespace SchoolCore.EntityFramework.Data
             context.SaveChanges();
 
             #endregion
+
             #region 课程老师的种子数据
 
             var courseInstructors = new[]
@@ -230,7 +263,93 @@ namespace SchoolCore.EntityFramework.Data
             context.SaveChanges();
 
             #endregion
-           
+
+
+            var enrollments = new[]
+            {
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "龙傲天").Id,
+                    CourseId = courses.Single(c => c.Title == "数学").CourseId,
+                    Grade = CourseGrade.A
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "龙傲天").Id,
+                    CourseId = courses.Single(c => c.Title == "政治").CourseId,
+                    Grade = CourseGrade.C
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "龙傲天").Id,
+                    CourseId = courses.Single(c => c.Title == "物理").CourseId,
+                    Grade = CourseGrade.D
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "王尼玛").Id,
+                    CourseId = courses.Single(c => c.Title == "物理").CourseId,
+                    Grade = CourseGrade.F
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "王尼玛").Id,
+                    CourseId = courses.Single(c => c.Title == "化学").CourseId
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "王尼玛").Id,
+                    CourseId = courses.Single(c => c.Title == "生物").CourseId
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "叶良辰").Id,
+                    CourseId = courses.Single(c => c.Title == "英语").CourseId,
+                    Grade = CourseGrade.A
+                }, new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "叶良辰").Id,
+                    CourseId = courses.Single(c => c.Title == "历史").CourseId,
+                    Grade = CourseGrade.D
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "张全蛋").Id,
+                    CourseId = courses.Single(c => c.Title == "英语").CourseId,
+                    Grade = CourseGrade.B
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "张全蛋").Id,
+                    CourseId = courses.Single(c => c.Title == "数学").CourseId,
+                    Grade = CourseGrade.A
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "纪晓岚").Id,
+                    CourseId = courses.Single(c => c.Title == "英语").CourseId
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "王小虎").Id,
+                    CourseId = courses.Single(c => c.Title == "生物").CourseId
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "和珅").Id,
+                    CourseId = courses.Single(c => c.Title == "物理").CourseId,
+                    Grade = CourseGrade.A
+                },
+                new Enrollment
+                {
+                    StudentId = students.Single(s => s.RealName == "和珅").Id,
+                    CourseId = courses.Single(c => c.Title == "英语").CourseId
+                }
+            };
+            foreach (var e in enrollments)
+                context.Enrollments.Add(e);
+            context.SaveChanges();
+
         }
     }
 }

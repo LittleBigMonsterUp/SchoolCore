@@ -1,6 +1,7 @@
 ﻿using SchoolCore.Application.enumsType;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace SchoolCore.Core.Models
     public class Enrollment
     {
         public int EnrollmentId { get; set; }
-
+        [DisplayFormat(NullDisplayText ="暂无成绩")]
         public CourseGrade? Grade { get; set; }
 
         public int StudentId { get; set; }

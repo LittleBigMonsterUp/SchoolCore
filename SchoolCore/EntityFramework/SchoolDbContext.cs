@@ -37,8 +37,7 @@ namespace SchoolCore.EntityFramework
             modelBuilder.Entity<Instructor>().ToTable("Instructor");
             modelBuilder.Entity<OfficeAssignment>().ToTable("OfficeAssignment").HasKey(a => a.InstructorId);
             modelBuilder.Entity<CourseAssignment>().ToTable("CourseAssignment").HasKey(a => new { a.CourseId, a.InstructorId });
-            
-          
+
         }
     }
 }

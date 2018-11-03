@@ -15,7 +15,7 @@ namespace SchoolCore.Core.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("部门民称")]
+        [DisplayName("部门名称")]
         [StringLength(50, MinimumLength = 2)]
         public string Name { get; set; }
 
